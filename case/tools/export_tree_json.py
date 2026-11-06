@@ -9,6 +9,17 @@ from pathlib import Path
 CASE = Path(__file__).resolve().parents[1]
 OUT = CASE.parent / "docs" / "tree-data.json"
 
+# Портреты из семейного архива: путь относительно docs/
+PHOTOS = {
+    "P-0023": "photos/family/chertkov-nikifor.jpg",
+    "P-0031": "photos/family/malanya-savelyevna.jpg",
+    "P-0032": "photos/family/tarasenko-semyon.jpg",
+    "P-0021": "photos/family/ligin-davyd-and-voronko.jpg",
+    "P-0019": "photos/family/voronko-ekaterina-nikolai-grigory-mikhail.jpg",
+    "P-0033": "photos/family/voronko-mikhail-nikolai-group.jpg",
+    "P-0034": "photos/family/voronko-ekaterina-nikolai-grigory-mikhail.jpg",
+}
+
 
 def read_rows(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8-sig", newline="") as handle:
@@ -43,6 +54,7 @@ def main() -> int:
                 "place": p["places"],
                 "status": p["candidate_status"],
                 "artifacts": [x.strip() for x in p["source_artifact_ids"].split(";") if x.strip()],
+                "photo": PHOTOS.get(p["person_id"], ""),
                 "notes": p["notes"],
             }
             for p in persons

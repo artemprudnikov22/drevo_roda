@@ -49,6 +49,7 @@
   aside dd{margin:2px 0 0}
   aside .close{position:absolute;top:12px;right:12px;background:none;border:1px solid var(--line);border-radius:6px;
     width:32px;height:32px;font-size:1rem;cursor:pointer}
+  aside .pphoto{display:block;width:100%;border:1px solid var(--line);border-radius:8px;margin:10px 0 4px}
   .hint{position:fixed;left:16px;bottom:12px;font-size:.72rem;color:var(--muted);z-index:4;max-width:70vw}
   @media (max-width:720px){aside{width:100%;max-width:100%}.tools input{width:120px}.legend{display:none}}
 </style>
@@ -262,6 +263,7 @@ function select(id){
   const kids = (children[id]||[]).map(x=>persons.get(x)?.name).filter(Boolean);
   const spouse = DATA.spouses.filter(([a,b])=>a===id||b===id).map(([a,b])=>persons.get(a===id?b:a)?.name).filter(Boolean);
   document.getElementById("panel-body").innerHTML = `
+    ${p.photo ? `<img class="pphoto" src="${p.photo}" alt="${p.name}">` : ""}
     <h2>${p.name}</h2>
     <div class="muted">${STATUS_TEXT[p.status] || p.status || ""}</div>
     <dl>
