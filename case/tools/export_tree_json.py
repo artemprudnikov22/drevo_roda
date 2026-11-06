@@ -15,9 +15,11 @@ PHOTOS = {
     "P-0031": "photos/family/malanya-savelyevna.jpg",
     "P-0032": "photos/family/tarasenko-semyon.jpg",
     "P-0021": "photos/family/ligin-davyd-and-voronko.jpg",
+    "P-0010": "photos/family/voronko-mikhail-nikolai-group.jpg",
+    "P-0016": "photos/family/voronko-ekaterina-nikolai-grigory-mikhail.jpg",
     "P-0019": "photos/family/voronko-ekaterina-nikolai-grigory-mikhail.jpg",
-    "P-0033": "photos/family/voronko-mikhail-nikolai-group.jpg",
-    "P-0034": "photos/family/voronko-ekaterina-nikolai-grigory-mikhail.jpg",
+    "P-0020": "photos/family/voronko-ekaterina-nikolai-grigory-mikhail.jpg",
+    "P-0022": "photos/family/voronko-mikhail-nikolai-group.jpg",
 }
 
 
