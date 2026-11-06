@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Прудниковы, Воронко, Чертковы, Тарасенко — семейное исследование</title>
+<style>
+@page { size:A4; margin:16mm 17mm; }
+:root {
+ --paper:#ffffff; --canvas:#eeeae6; --ink:#242323; --muted:#625d5a; --line:#d5cfca;
+ --accent:#812f34; --accent-soft:#f8efed; --soft:#f6f3f0;
+ --ok:#285d39; --ok-bg:#eaf2e9; --maybe:#725011; --maybe-bg:#faf0d9;
+ --no:#842f34; --no-bg:#f8e9e7; --family:#344f70; --family-bg:#eaf0f7;
+ --sans:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Arial,sans-serif;
+ --serif:Georgia,"Times New Roman","Noto Serif",serif;
+ color-scheme:light;
+}
+* { box-sizing:border-box; }
+html { scroll-padding-top:24px; }
+body { margin:0; background:var(--canvas); color:var(--ink); font:1.0625rem/1.75 var(--serif); }
+a { color:var(--accent); text-underline-offset:3px; text-decoration-thickness:1px; }
+a:hover { text-decoration-thickness:2px; }
+a:focus-visible,summary:focus-visible,.table-wrap:focus-visible { outline:3px solid var(--accent); outline-offset:5px; }
+.report-shell { max-width:1180px; margin:32px auto; background:var(--paper); border-top:7px solid var(--ink); }
+.report-topline { display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 20px; padding:17px 52px; border-bottom:1px solid var(--ink); color:var(--muted); font:600 .75rem/1.5 var(--sans); letter-spacing:.12em; }
+.report-header { padding:40px 52px 32px; border-bottom:1px solid var(--ink); }
+.report-intro { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:0 48px; align-items:start; }
+.eyebrow { margin:0 0 10px; grid-column:1; font:600 .75rem/1.5 var(--sans); letter-spacing:.16em; color:var(--accent); }
+h1 { overflow-wrap:anywhere; grid-column:1; font:400 clamp(2.6rem,6vw,4.75rem)/1.03 var(--serif); margin:0 0 16px; text-wrap:balance; }
+.subtitle { grid-column:1; font:1.125rem/1.55 var(--serif); max-width:44ch; color:var(--muted); margin:0 0 24px; }
+.report-meta { grid-column:2; grid-row:2/4; margin:6px 0 0; display:grid; gap:16px; padding-left:24px; border-left:1px solid var(--line); font:.8125rem/1.7 var(--sans); }
+.report-meta dt { font:600 .75rem/1.5 var(--sans); letter-spacing:.06em; color:var(--muted); margin:0 0 3px; }
+.report-meta dd { margin:0; }
+.report-note { grid-column:1/-1; color:var(--muted); font:.8125rem/1.65 var(--sans); border-top:1px solid var(--line); padding-top:12px; margin-top:8px; }
+.report-nav { display:flex; flex-wrap:wrap; gap:4px 32px; margin:0 52px; padding:6px 0; border-bottom:1px solid var(--ink); font:600 .75rem/1.5 var(--sans); letter-spacing:.06em; }
+.report-nav a { min-height:44px; display:inline-flex; align-items:center; text-decoration:none; }
+.report-nav a:hover { text-decoration:underline; }
+main { max-width:940px; padding:36px 52px 44px; margin:0 auto; }
+h2 { margin:44px 0 18px; padding:14px 0 0; border-top:1px solid var(--ink); color:var(--ink); font:400 clamp(1.625rem,3vw,2rem)/1.3 var(--serif); letter-spacing:-.02em; break-after:avoid; text-wrap:balance; }
+h3 { margin:28px 0 14px; color:var(--accent); font:600 .875rem/1.5 var(--sans); letter-spacing:.04em; }
+p { margin:0 0 18px; }
+p,li,td { overflow-wrap:break-word; }
+main>p { max-width:72ch; }
+.lead { padding:22px 24px 24px; background:var(--soft); border-top:3px solid var(--accent); border-bottom:1px solid var(--line); margin-bottom:24px; }
+.lead h2 { margin:0 0 14px; padding:0; border:0; color:var(--accent); font:600 .75rem/1.5 var(--sans); letter-spacing:.12em; }
+.lead ul { margin:0; padding-left:18px; }
+.lead li { margin-bottom:12px; }
+.lead li:last-child { margin-bottom:0; }
+.tag { display:inline-block; max-width:100%; padding:2px 7px; margin:2px 0; border-radius:2px; font:600 .75rem/1.5 var(--sans); white-space:nowrap; }
+.ok { color:var(--ok); background:var(--ok-bg); }
+.maybe { color:var(--maybe); background:var(--maybe-bg); }
+.no { color:var(--no); background:var(--no-bg); }
+.fam { color:var(--family); background:var(--family-bg); }
+.evidence-guide { border-bottom:1px solid var(--line); color:var(--muted); margin:0 0 30px; font:.8125rem/1.7 var(--sans); }
+.evidence-guide h3 { padding:12px 0 0; margin:0; font:600 .8125rem/1.7 var(--sans); color:var(--ink); letter-spacing:normal; }
+.legend { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px 24px; padding:8px 0 18px; }
+.legend .tag { display:table; margin-bottom:4px; }
+.table-wrap { max-width:100%; overflow-x:auto; margin:16px 0 20px; }
+table { width:100%; border-collapse:collapse; font:.875rem/1.65 var(--sans); }
+th,td { text-align:start; vertical-align:top; border-bottom:1px solid var(--line); padding:12px 16px 12px 0; }
+th { color:var(--muted); font:600 .75rem/1.5 var(--sans); letter-spacing:.04em; border-bottom:1px solid var(--ink); }
+th:last-child,td:last-child { padding-right:0; }
+td.d { width:20%; min-width:96px; }
+td.t { width:17%; }
+tr { break-inside:avoid; }
+tr:target { background:var(--accent-soft); }
+blockquote { margin:28px 0; padding:2px 0 2px 20px; border-left:2px solid var(--accent); color:var(--accent); font:italic 1.25rem/1.5 var(--serif); }
+ol,ul { margin:0 0 22px; padding-left:22px; }
+li { margin-bottom:10px; }
+.small { color:var(--muted); font:.8125rem/1.65 var(--sans); }
+.src li { color:var(--muted); font:.8125rem/1.75 var(--sans); margin-bottom:18px; padding-left:4px; }
+.src li b { color:var(--ink); }
+:target { scroll-margin-top:24px; }
+.report-footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:20px 52px; border-top:1px solid var(--ink); color:var(--muted); font:.75rem/1.5 var(--sans); }
+.skip-link { position:absolute; top:8px; left:8px; padding:12px 16px; z-index:10; background:var(--paper); transform:translateY(-200%); font:1rem/1.5 var(--sans); }
+.skip-link:focus { transform:translateY(0); }
+.family-tree { margin:32px 0 0; }
+.tree-heading { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px 20px; margin-bottom:8px; }
+.tree-heading h2 { font:400 1.75rem/1.3 var(--serif); border:0; padding:0; margin:0; }
+.tree-heading>span { color:var(--muted); font:.75rem/1.5 var(--sans); }
+.tree-caption { font:.75rem/1.65 var(--sans); color:var(--muted); margin-top:14px; }
+.gen { display:grid; grid-template-columns:112px minmax(0,1fr); gap:12px; align-items:start; padding:12px 0; border-top:1px solid var(--line); }
+.gen-label { color:var(--muted); font:600 .6875rem/1.5 var(--sans); letter-spacing:.06em; padding-top:14px; }
+.gen-cards { display:flex; flex-wrap:wrap; gap:10px; }
+.person-card { display:block; flex:1 1 190px; min-width:170px; max-width:270px; padding:10px 12px 12px; background:var(--paper); border-left:3px solid var(--line); text-decoration:none; color:var(--ink); }
+a.person-card:hover { background:var(--accent-soft); }
+.person-card.subject { background:var(--accent-soft); border-left-color:var(--accent); }
+.person-card.line-p { border-left-color:#344f70; }
+.person-card.line-v { border-left-color:#2f5d46; }
+.person-name { display:block; font:400 1.0625rem/1.3 var(--serif); margin-bottom:4px; }
+.person-years { display:block; color:var(--muted); font:.6875rem/1.6 var(--sans); font-variant-numeric:tabular-nums; }
+.person-status { display:block; margin-top:6px; font:600 .6875rem/1.5 var(--sans); color:var(--muted); }
+.person-status .tag { font-size:.625rem; }
+.photos { display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start; }
+figure { margin:0; }
+figure img { display:block; max-width:100%; height:auto; }
+figcaption { font:.8125rem/1.65 var(--sans); color:var(--muted); margin-top:8px; }
+@media(max-width:959px) {
+ .report-shell { margin:16px; }
+ .report-header { padding:32px; }
+ .report-topline,.report-footer { padding-left:32px; padding-right:32px; }
+ .report-nav { margin-left:32px; margin-right:32px; }
+ .report-intro { gap:0 24px; }
+ main { padding:32px; }
+}
+@media(max-width:600px) {
+ body { font-size:1rem; }
+ .report-shell { margin:0; border-top-width:5px; }
+ .report-topline { padding:13px 20px; }
+ .report-header { padding:24px 20px; }
+ .report-intro { display:block; }
+ h1 { font-size:2.6rem; }
+ .report-meta { display:flex; flex-wrap:wrap; gap:10px 24px; padding:0; margin:0 0 18px; border:0; }
+ .report-nav { margin:0 20px; gap:4px 20px; }
+ main { padding:24px 20px; }
+ .lead { padding:20px; }
+ .legend { grid-template-columns:1fr; }
+ .gen { grid-template-columns:1fr; }
+ .gen-label { padding-top:0; }
+ .report-footer { padding:20px; }
+}
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { transition:none !important; scroll-behavior:auto !important; } }
+@media print {
+ body { background:white; font-size:10.5pt; }
+ .report-shell { max-width:none; margin:0; border:0; }
+ .report-topline,.report-footer { padding:8pt 0; font-size:8pt; }
+ .report-header { padding:16pt 0; }
+ h1 { font-size:32pt; }
+ .family-tree { break-inside:avoid; }
+ .report-nav,.skip-link { display:none; }
+ main { padding:0; }
+ .table-wrap { overflow:visible; }
+ table { min-width:0; font-size:8.5pt; }
+ a { color:inherit; }
+}
+bdi { unicode-bidi:isolate; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#report-content">К тексту отчёта</a>
+<div class="report-shell">
+<div class="report-topline"><span>Семейная история · Исследование</span><span>Составлено 06.11.2026</span></div>
+<header class="report-header" id="top">
+  <div class="report-intro">
+    <p class="eyebrow">Семейная история по документам</p>
+    <h1><bdi dir="auto">Прудниковы, Воронко, Чертковы, Тарасенко</bdi></h1>
+    <p class="subtitle">Кто были предки по линиям отца и матери, где и когда они жили — первая сводка по семейным сведениям и открытым источникам.</p>
+    <dl class="report-meta">
+      <div><dt>Период</dt><dd>1896 — 2025; документами подтверждён только XX век частично</dd></div>
+      <div><dt>Основание</dt><dd>Записанные рассказы родителей, пересказ наградных скриншотов, справочники по местам</dd></div>
+      <div><dt>Объём</dt><dd>41 человек, 53 родственные связи, 4 известных поколения</dd></div>
+    </dl>
+    <p class="report-note">Все родственные связи ниже пока опираются на семейную память, а не на архивные документы. Это исходная точка исследования, а не готовое доказанное древо. Данные о живых родственниках сокращены до имени и степени родства.</p>
+  </div>
+
+  <figure class="family-tree" aria-labelledby="tree-title" aria-describedby="tree-description">
+    <div class="tree-heading"><h2 id="tree-title">Семейное древо</h2><span>Известные поколения, линии отца и матери</span></div>
+    <div class="gen">
+      <div class="gen-label">Старшее<br>известное</div>
+      <div class="gen-cards">
+        <div class="person-card"><span class="person-name">Лидия Владимировна</span><span class="person-years">1896 — ?; Подмосковье</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></div>
+        <div class="person-card"><span class="person-name">Давыд Лигинов</span><span class="person-years">1882 — ?; Сачковичи; Нью-Йорк 1913</span><span class="person-status"><span class="tag ok">по документу</span></span></div>
+        <div class="person-card"><span class="person-name">Семён Чертков</span><span class="person-years">? — ?; имя из отчества сына</span><span class="person-status"><span class="tag maybe">версия</span></span></div>
+        <div class="person-card"><span class="person-name">Василий и Маланья Тарасенко</span><span class="person-years">? — ?; Красная Буда; около 10 детей</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></div>
+        <div class="person-card"><span class="person-name">Отец Григория Воронко</span><span class="person-years">? — ?; известен по семейному фото</span><span class="person-status"><span class="tag maybe">версия</span></span></div>
+      </div>
+    </div>
+    <div class="gen">
+      <div class="gen-label">Прадеды<br>и прабабки</div>
+      <div class="gen-cards">
+        <div class="person-card line-p"><span class="person-name">Зинаида Александровна Брагина</span><span class="person-years">род. 07.02, год ?; Калининград с 1946</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></div>
+        <div class="person-card line-p"><span class="person-name">Михаил Брагин</span><span class="person-years">? — ?; имя из отчества дочери</span><span class="person-status"><span class="tag maybe">версия</span></span></div>
+        <div class="person-card line-v"><span class="person-name">Григорий Воронко</span><span class="person-years">? — ?; с. Сачковичи</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></div>
+        <div class="person-card line-v"><span class="person-name">Екатерина Давыдовна Воронко (Лигинова)</span><span class="person-years">? — ?; Сачковичи, Урал</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></div>
+        <div class="person-card line-v"><span class="person-name">Никифор Семёнович Чертков</span><span class="person-years">1909 — ?; 1109 сп 330 сд</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></div>
+        <div class="person-card line-v"><span class="person-name">Татьяна Васильевна Черткова (Тарасенко)</span><span class="person-years">? — ?; Красная Буда</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></div>
+      </div>
+    </div>
+    <div class="gen">
+      <div class="gen-label">Бабушки<br>и дедушки</div>
+      <div class="gen-cards">
+        <a class="person-card line-p" href="#relationship-pg"><span class="person-name">Владимир Васильевич Прудников</span><span class="person-years">13.03.1931, д. Дубровка Смоленской обл.</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></a>
+        <a class="person-card line-p" href="#relationship-pg"><span class="person-name">Людмила Михайловна Прудникова (Брагина)</span><span class="person-years">02.10.1936</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></a>
+        <a class="person-card line-v" href="#relationship-mg"><span class="person-name">Михаил Григорьевич Воронко</span><span class="person-years">17.11.1929 — 15.09.2004; Сачковичи</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></a>
+        <a class="person-card line-v" href="#relationship-mg"><span class="person-name">Валентина Никифоровна Воронко (Черткова)</span><span class="person-years">07.01.1937; Калининград с 1954</span><span class="person-status"><span class="tag fam">рабочая дата</span></span></a>
+      </div>
+    </div>
+    <div class="gen">
+      <div class="gen-label">Родители</div>
+      <div class="gen-cards">
+        <a class="person-card" href="#relationship-parents"><span class="person-name">Сергей Владимирович Прудников</span><span class="person-years">21.07.1960, Мурманск</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></a>
+        <a class="person-card" href="#relationship-parents"><span class="person-name">Светлана Михайловна Прудникова</span><span class="person-years">29.05.1962, Калининград</span><span class="person-status"><span class="tag fam">по сведениям семьи</span></span></a>
+      </div>
+    </div>
+    <div class="gen">
+      <div class="gen-label">Основной<br>человек</div>
+      <div class="gen-cards">
+        <div class="person-card subject"><span class="person-name">Артём Сергеевич Прудников</span><span class="person-years">22.01.1990, Калининград</span><span class="person-status">Автор запроса</span></div>
+      </div>
+    </div>
+    <figcaption class="tree-caption" id="tree-description">Показаны только прямые предки и ближайшие родственники. Боковые ветви — братья, сёстры, вторые браки — перечислены в таблицах ниже. Синяя линия — род отца, зелёная — род матери.<span>Все связи на схеме имеют статус семейного свидетельства или версии; ни одна пока не подтверждена документом.</span></figcaption>
+  </figure>
+</header>
+<nav class="report-nav" aria-label="Разделы отчёта"><a href="#findings">Главное</a><a href="#family">Семья</a><a href="#environment">Среда</a><a href="#connections">Связи</a><a href="#chronology">Хронология</a><a href="#places">Места</a><a href="#military">Военное</a><a href="#documents">Документы</a><a href="#conflicts">Нестыковки</a><a href="#next">Дальше</a><a href="#sources">Источники</a></nav>
+<main id="report-content">
+
+<div class="lead" id="findings">
+  <h2>Главное</h2>
+  <ul>
+    <li><b>Восстановлены четыре поколения и 41 человек.</b> Линии отца и матери сходятся в Калининграде после 1946 года; старшие ветви — смоленская, брянская и могилёвская. <span class="tag fam">по сведениям семьи</span></li>
+    <li><b>Наградные документы найдены и скачаны.</b> Чертков: медаль «За отвагу», приказ № 204 от 06.08.1946, наградной лист ЦАМО ф. 33, оп. 744807, д. 658, л. 467–468. Тарасенко: орден Красного Знамени, приказ 677/н от 18.06.1945, ЦАМО ф. 33, оп. 686196, д. 6113. <span class="tag ok">по документу</span></li>
+    <li><b>Скачаны полные альбомы Памяти народа.</b> Чертков — 13 страниц, Тарасенко — 43 страницы, с текстовым слоем и сканами. Это не скриншоты, а экспорт документов. <span class="tag ok">по документу</span></li>
+    <li><b>Место рождения Черткова спорно.</b> Альбом Памяти народа указывает Московскую область, г. Раменское; чтение карточки в браузере дало Могилёвскую область, д. Домамеричи. Версия не установлена, нужен ручной разбор скана. <span class="tag no">есть противоречие</span></li>
+    <li><b>Тарасенко: район и село установлены.</b> Кричевский район, Михеевский сельсовет, д. Кр. Русей (Червонная-Буда). Версия «Кличевский район» была ошибкой распознавания. <span class="tag ok">по документу</span></li>
+    <li><b>Награды Тарасенко подтверждены списком.</b> Красная Звезда, два ордена Отечественной войны I степени, Отечественная война II степени, орден Ленина, Красное Знамя, медали. <span class="tag ok">по документу</span></li>
+    <li><b>Уточнены два старых противоречия.</b> Лидия — Владимировна; дата Валентины — 7 января, день рождения празднуют в Рождество. <span class="tag fam">по сведениям семьи</span></li>
+    <li><b>Найден Давыд Лигинов в Ellis Island.</b> 13.09.1913, пароход Russia, Либава — Нью-Йорк, 31 год, женат, место жительства Sackowec (Сачковичи). Тем же рейсом ехал Silwester Liginow, 17 лет, из того же села. <span class="tag ok">по документу</span></li>
+    <li><b>Подтверждено фамильное гнездо Воронко в Сачковичах.</b> Приходской сайт называет Анастасию Фёдоровну Воронко 1931 г.р., братьев Дмитрия и Тихона Романовичей Воронко из Великих Пожней, певчую Марфу Емельяновну Воронко. Родство с нашей семьёй не доказано, но фамилия и село те же. <span class="tag fam">контекст</span></li>
+  </ul>
+</div>
+
+<aside class="evidence-guide" aria-labelledby="evidence-guide-title">
+  <h3 id="evidence-guide-title">Как читать метки надёжности</h3>
+  <div class="legend">
+    <div><span class="tag ok">подтверждено</span> — независимые доказательные цепочки</div>
+    <div><span class="tag ok">по документу</span> — один документ, прямая запись</div>
+    <div><span class="tag fam">по сведениям семьи</span> — рассказ родственников с записанным происхождением</div>
+    <div><span class="tag maybe">версия</span> — вывод по косвенным признакам, требует проверки</div>
+    <div><span class="tag no">не установлено</span> — данных недостаточно</div>
+    <div><span class="tag no">есть противоречие</span> — источники расходятся, конфликт описан</div>
+  </div>
+</aside>
+
+<h2 id="family">Семья</h2>
+<p>Ниже — прямые родственники и ближайшие боковые ветви. Даты даны так, как их назвали родственники; где источник расходится, это указано.</p>
+
+<h3>Линия отца</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Линия отца"><table>
+  <thead><tr><th scope="col">Кем приходится</th><th scope="col">Имя</th><th scope="col">Годы</th><th scope="col">Место и занятие</th><th scope="col">Надёжность</th></tr></thead>
+  <tbody>
+    <tr><td>Дед</td><td>Владимир Васильевич Прудников</td><td>13.03.1931 — ?</td><td>д. Дубровка, Смоленская обл.; капитан 3 ранга, Балтийский флот, служба в Латвии</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Бабушка</td><td>Людмила Михайловна Прудникова, урожд. Брагина</td><td>02.10.1936 — ?</td><td>место рождения не названо</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Прабабушка</td><td>Зинаида Александровна Брагина</td><td>07.02, год не назван</td><td>Калининград с 1946; работала в ЗАГСе, литературный работник</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Прапрабабушка</td><td>Лидия Владимировна</td><td>1896 — ?</td><td>Подмосковье; шестеро детей, четверо умерли в детстве</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Прадед</td><td>Василий Прудников</td><td>? — ?</td><td>д. Дубровка, Смоленский р-н; имя восстановлено по отчеству деда</td><td class="t"><span class="tag maybe">версия</span></td></tr>
+    <tr><td>Прапрадед</td><td>Григорий Прудников</td><td>? — ?</td><td>д. Дубровка, Смоленский р-н; назван отцом по уточнению 06.11.2026</td><td class="t"><span class="tag maybe">версия</span></td></tr>
+    <tr><td>Дядя деда (версия)</td><td>Александр Григорьевич Прудников</td><td>08.12.1904 — 21.09.1943</td><td>д. Дубровка, Смоленский р-н; красноармеец 339 сд, убит на Кубани</td><td class="t"><span class="tag ok">по документу</span></td></tr>
+    <tr><td>Двоюродный дед</td><td>Старший брат Владимира Васильевича</td><td>? — погиб на фронте</td><td>имя неизвестно; отец пользователя уточнил, что это не Александр</td><td class="t"><span class="tag maybe">версия</span></td></tr>
+  </tbody>
+</table></div>
+
+<h3>Линия матери</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Линия матери"><table>
+  <thead><tr><th scope="col">Кем приходится</th><th scope="col">Имя</th><th scope="col">Годы</th><th scope="col">Место и занятие</th><th scope="col">Надёжность</th></tr></thead>
+  <tbody>
+    <tr><td>Дед</td><td>Михаил Григорьевич Воронко</td><td>17.11.1929 — 15.09.2004</td><td>с. Сачковичи, Климовский р-н Брянской обл.; начальник расчётного отдела Прибалтийской ж/д</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Бабушка</td><td>Валентина Никифоровна Воронко, урожд. Черткова</td><td>07.01.1937</td><td>Калининград с 1954; фельдшер, рентгенолаборант; во втором браке — Рычко</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Прадед</td><td>Никифор Семёнович Чертков</td><td>1909 — ?</td><td>повар 1109 сп 330 сд; после войны шеф-повар в авиачасти</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Прабабушка</td><td>Татьяна Васильевна Черткова, урожд. Тарасенко</td><td>? — ?</td><td>Красная Буда, Кричевский р-н</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Прапрадед</td><td>Василий Тарасенко</td><td>? — ?</td><td>Красная Буда; крестьянская семья, около 10 детей</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Прапрабабушка</td><td>Маланья (Меланья) Савельевна Тарасенко</td><td>? — ?</td><td>Красная Буда</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Двоюродный дед</td><td>Семён Васильевич Тарасенко</td><td>1915 — ?</td><td>майор, 373 ап 175 сд; после войны жил в Германии, работал завхозом</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Двоюродный дед</td><td>Николай Григорьевич Воронко</td><td>? — ?</td><td>Балтийск; первый помощник капитана</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Прапрадед</td><td>Давыд Лигинов</td><td>ок. 1882 — ?</td><td>Сачковичи; в 1913 приехал в Нью-Йорк, вернулся; служил в церкви, шил</td><td class="t"><span class="tag ok">по документу</span></td></tr>
+    <tr><td>Прапрабабушка</td><td>Екатерина Давыдовна Воронко, урожд. Лигинова</td><td>? — ?</td><td>Сачковичи; раскулачивание, магазин в НЭП, оккупация</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+  </tbody>
+</table></div>
+
+<h3>Ветви вне прямых линий</h3>
+<p>Наталья — сестра Светланы Михайловны. Татьяна Михайловна Текучева (1974) — единокровная сестра по Михаилу Григорьевичу. Людмила Николаевна (ум. 2025) и Светлана — дети Николая Григорьевича Воронко. Александра Никифоровна (05.03.1935) — сестра Валентины, её муж Анатолий Иванович Синьков, дети Ирина и Александр. У Семёна Тарасенко — жена Елена, сын Алексей (26.05.1937), внуки Игорь (умер) и Ольга (педиатр, Санкт-Петербург). У Владимира Тарасенко (1928) — дети Валентина и Наталья (Москва), Владимир (Балтийск).</p>
+<p class="small">Живые родственники перечислены только по имени и степени родства; контакты, адреса и документы не собирались.</p>
+
+<h2 id="environment">Среда и односельчане</h2>
+<p>Прямые предки — не единственный источник. В Сачковичах и соседних Великих Пожнях документально зафиксировано несколько Воронко. Это помогает проверять, какие семьи жили рядом, и искать общие метрики.</p>
+<ul>
+  <li><b>Анастасия Фёдоровна Воронко, 1931 г.р.</b> Жительница Сачковичей, староста Покровского храма с 2004 года, автор воспоминаний об открытии церкви в оккупацию. Год рождения близок к Михаилу (1929) и Валентине (1937), село то же. Родство не доказано. <span class="tag maybe">версия</span></li>
+  <li><b>Дмитрий и Тихон Романовичи Воронко</b>, братья из Великих Пожней. В 1937 году, когда храм закрыли, забрали два колокола и хранили дома до осени 1942 года. Потом колокола вернули в храм. <span class="tag ok">по источнику</span></li>
+  <li><b>Марфа Емельяновна Воронко</b> — певчая прихода в трудные годы. <span class="tag ok">по источнику</span></li>
+  <li><b>Храм</b> закрыт в 1937 году, колокольня обезглавлена; открыт поздней осенью 1942 года с разрешения оккупационных властей. 19 января 1943 года — первое водосвятие на озере, крестным ходом под звон четырёх колоколов. <span class="tag ok">по источнику</span></li>
+</ul>
+<p class="small">Это не доказательство родства. Но это подтверждает: Воронко — местная фамилия, а не случайная; семья жила в том же приходском кусте. Следующий шаг — метрики и довоенные списки домохозяев по Сачковичам и Великим Пожням.</p>
+
+<h2 id="connections">Как мы связаны</h2>
+<p>Каждая связь оценена отдельно. Пока ни одна не имеет двух независимых подтверждений: единственный источник — сводка семейных рассказов, записанная 06.11.2026. Поэтому статус везде <span class="tag fam">по сведениям семьи</span> или <span class="tag maybe">версия</span>.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Ключевые родственные связи"><table>
+  <thead><tr><th scope="col">Связь</th><th scope="col">Чем подтверждается сейчас</th><th scope="col">Что нужно для подтверждения</th><th scope="col">Надёжность</th></tr></thead>
+  <tbody>
+    <tr id="relationship-parents"><td>Сергей Владимирович и Светлана Михайловна → Артём</td><td>Свидетельство самого Артёма и родителей; отчества согласуются</td><td>Свидетельство о рождении Артёма, 1990, Калининград</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr id="relationship-pg"><td>Владимир Васильевич и Людмила Михайловна → Сергей</td><td>Семейный рассказ; отчества Сергея согласуются с обоими именами</td><td>Свидетельство о рождении Сергея, 1960, Мурманск</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr id="relationship-mg"><td>Михаил Григорьевич и Валентина Никифоровна → Светлана</td><td>Семейный рассказ; отчество Светланы согласуется</td><td>Свидетельство о рождении Светланы, 1962, Калининград</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Зинаида Александровна → Людмила Михайловна</td><td>Семейный рассказ; отчество Людмилы согласуется</td><td>Документы ЗАГС по месту рождения Людмилы (место не названо)</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Лидия → Зинаида Александровна</td><td>Семейный рассказ; имя матери названо</td><td>Метрика или актовая запись о рождении Зинаиды</td><td class="t"><span class="tag no">не установлено</span></td></tr>
+    <tr><td>Михаил Брагин → Людмила Михайловна</td><td>Только отчество дочери</td><td>Любой документ с именем отца</td><td class="t"><span class="tag maybe">версия</span></td></tr>
+    <tr><td>Григорий и Екатерина Давыдовна → Михаил и Николай Воронко</td><td>Семейный рассказ, названы оба родителя</td><td>Актовая запись о рождении Михаила, 1929, Сачковичи</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Давыд Лигинов → Екатерина Давыдовна</td><td>Семейный рассказ; отчество Екатерины согласуется</td><td>Метрика о рождении Екатерины (до 1918) или брачная запись</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Никифор Семёнович и Татьяна Васильевна → Валентина и Александра</td><td>Семейный рассказ; отчества дочерей согласуются</td><td>Свидетельства о рождении 1935 и 1937 годов</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Василий и Маланья → Татьяна, Семён, Владимир, Иван</td><td>Семейный рассказ; старшинство Татьяны указано</td><td>Метрические книги Красной Буды 1905–1918</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td>Семён Васильевич и Елена → Алексей</td><td>Семейный рассказ; фамилия и отчество Алексея выведены</td><td>Актовая запись о рождении Алексея, 1937</td><td class="t"><span class="tag maybe">версия</span></td></tr>
+    <tr><td>Семён Чертков → Никифор Семёнович</td><td>Только отчество сына</td><td>Метрика о рождении Никифора, 1909</td><td class="t"><span class="tag maybe">версия</span></td></tr>
+  </tbody>
+</table></div>
+<p>Почему это одни и те же люди: имена и отчества внутри каждой ветви согласуются друг с другом, места образуют связный маршрут (Сачковичи — Красная Буда — Калининград; Дубровка — Мурманск — Калининград). Но это согласованность рассказа, а не документ. Однофамильцы не исключены — особенно Прудниковы Смоленской области и Тарасенко Могилёвской.</p>
+
+<h2 id="chronology">Хронология</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Хронология"><table>
+  <thead><tr><th scope="col">Когда</th><th scope="col">Что и где</th><th scope="col">Надёжность</th></tr></thead>
+  <tbody>
+    <tr><td class="d">1896</td><td>Родилась Лидия Владимировна (прапрабабушка по линии отца), Подмосковье</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">1909</td><td>Родился Никифор Семёнович Чертков; место рождения спорно — Раменское или Домамеричи</td><td class="t"><span class="tag no">есть противоречие</span></td></tr>
+    <tr><td class="d">13.09.1913</td><td>Давыд Лигинов прибыл в Нью-Йорк на пароходе Russia из Либавы; тем же рейсом — Silwester Liginow</td><td class="t"><span class="tag ok">по документу</span></td></tr>
+    <tr><td class="d">30.03.1915</td><td>Родился Семён Васильевич Тарасенко, Кричевский р-н, Михеевский с/с, д. Кр. Русей (Червонная-Буда)</td><td class="t"><span class="tag ok">по документу</span></td></tr>
+    <tr><td class="d">1920-е</td><td>НЭП: продуктовый магазин Воронко; позже раскулачивание, Урал</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">1928</td><td>Родился Владимир Тарасенко, Красная Буда</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">17.11.1929</td><td>Родился Михаил Григорьевич Воронко, с. Сачковичи</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">13.03.1931</td><td>Родился Владимир Васильевич Прудников, д. Дубровка Смоленской обл.</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">05.03.1935</td><td>Родилась Александра Никифоровна</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">02.10.1936</td><td>Родилась Людмила Михайловна Брагина</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">07.01.1937</td><td>Родилась Валентина Никифоровна; день рождения празднуют в Рождество</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">26.05.1937</td><td>Родился Алексей, сын Семёна Тарасенко, Красная Буда</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">27.06.1941</td><td>Чертков поступил на службу, призван Кричевским РВК</td><td class="t"><span class="tag ok">по документу</span></td></tr>
+    <tr><td class="d">1937</td><td>В Сачковичах закрыт Покровский храм; колокола сохранили братья Воронко</td><td class="t"><span class="tag ok">по источнику</span></td></tr>
+    <tr><td class="d">1941–1943</td><td>Оккупация Красной Буды и Климовского района</td><td class="t"><span class="tag ok">по справочнику</span></td></tr>
+    <tr><td class="d">осень 1942</td><td>В Сачковичах открыт Покровский храм; 19.01.1943 первое водосвятие</td><td class="t"><span class="tag ok">по источнику</span></td></tr>
+    <tr><td class="d">1944–1945</td><td>Чертков — 1109 сп 330 сд, ранение под Чаусами, плен и освобождение. Тарасенко — 373 ап 175 сд, 1-й Белорусский фронт</td><td class="t"><span class="tag ok">по документу</span></td></tr>
+    <tr><td class="d">18.06.1945</td><td>Приказ 677/н: награждение Тарасенко</td><td class="t"><span class="tag ok">по документу</span></td></tr>
+    <tr><td class="d">06.08.1946</td><td>Приказ № 204: медаль «За отвагу» Черткову</td><td class="t"><span class="tag ok">по документу</span></td></tr>
+    <tr><td class="d">1946</td><td>Зинаида Александровна приехала в Калининград</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">1954</td><td>Валентина Никифоровна приехала в Калининград, поступила в медицинское училище</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">21.07.1960</td><td>Родился Сергей Владимирович Прудников, Мурманск</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">29.05.1962</td><td>Родилась Светлана Михайловна Прудникова, Калининград</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">22.01.1990</td><td>Родился Артём Сергеевич Прудников, Калининград</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">15.09.2004</td><td>Умер Михаил Григорьевич Воронко</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+    <tr><td class="d">2025</td><td>Умерла Людмила Николаевна, дочь Николая Воронко</td><td class="t"><span class="tag fam">по сведениям семьи</span></td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="places">Места и где искать документы</h2>
+<p>Ключевой принцип: смотреть на административную принадлежность <b>на дату события</b>, а не на современную карту. И ещё одно: метрические книги — церковные, они велись до 1918 года. Рождения после 1918 года ищутся в актовых записях ЗАГС, а не в метриках.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Места"><table>
+  <thead><tr><th scope="col">Как в рассказе</th><th scope="col">Принадлежность на дату события</th><th scope="col">Сейчас</th><th scope="col">Где искать</th></tr></thead>
+  <tbody>
+    <tr><td>с. Сачковичи</td><td>до 1917 — Новозыбковский уезд Черниговской губ.; с 1929 — Климовский р-н; с 1944 — Брянская обл.</td><td>Климовский р-н, Брянская обл.</td><td>Рождение 1929 — актовая запись: ГАБО и архив ЗАГС Брянской обл.</td></tr>
+    <tr><td>Красная Буда</td><td>Установлено: Кричевский р-н, Михеевский с/с, д. Кр. Русей (Червонная-Буда). Исторически — Климовичский уезд (1883), затем Кричевский р-н. Добрушский и Чаусский варианты к семье не относятся</td><td>Кричевский р-н, Могилёвская обл.</td><td>Метрики до 1918 — НИАБ (Минск), ГАМО (Могилёв); записи 1920–1930-х — районный ЗАГС</td></tr>
+    <tr><td>д. Домамеричи</td><td>Климовичский уезд Могилёвской губ. (до 1917), затем Климовичский р-н</td><td>Климовичский р-н, Могилёвская обл.</td><td>Метрики 1909 — НИАБ и ГАМО; приход требует уточнения</td></tr>
+    <tr><td>д. Дубровка, Смоленская обл.</td><td>район не назван</td><td>не установлено: в области несколько Дубровок</td><td>Сначала уточнить район; затем ГАСО и районный ЗАГС</td></tr>
+    <tr><td>Чаусы</td><td>Могилёвская обл., БССР</td><td>Чаусы, Могилёвская обл.</td><td>Место ранения — в наградном листе; гражданские записи — НИАБ/ГАМО</td></tr>
+    <tr><td>Калининград</td><td>с 1946 — Калининградская обл.; до 1946 — Кёнигсберг</td><td>Калининград</td><td>ЗАГС Калининграда; Государственный архив Калининградской области</td></tr>
+    <tr><td>Мурманск</td><td>Мурманская обл., РСФСР</td><td>Мурманск</td><td>ЗАГС Мурманска; ГАМО Мурманской обл.</td></tr>
+    <tr><td>Урал</td><td>спецпоселение, точное место не названо</td><td>—</td><td>Архивы МВД/ФСБ по месту поселения; ГАБО по раскулачиванию</td></tr>
+    <tr><td>США</td><td>вне СССР, до 1917</td><td>—</td><td>Списки пассажиров и иммиграционные записи США</td></tr>
+  </tbody>
+</table></div>
+<p class="small">Красная Буда установлена по адресу из альбома Тарасенко: Кричевский район, Михеевский сельсовет, деревня Кр. Русей (Червонная-Буда). Прежняя путаница с Добрушем и Чаусами снята. Чертков родился не здесь, а по одной версии в Раменском, по другой — в Домамеричах; это отдельный спор.</p>
+
+<h2 id="military">Военная служба</h2>
+<h3>Никифор Семёнович Чертков</h3>
+<p>1909 года рождения. Место рождения в источниках расходится: альбом Памяти народа указывает Московскую область, г. Раменское; чтение карточки в браузере дало Могилёвскую область, Климовичский район, д. Домамеричи. Призван Кричевским РВК; в карточках две даты призыва — 27.06.1941 и 07.07.1941. Воевал в 869-м стрелковом полку 271-й стрелковой дивизии и в 1109-м стрелковом полку 330-й стрелковой дивизии. Тяжело ранен под Чаусами, инвалид III группы. Попал в плен, был освобождён. Награждён медалью «За отвагу» по приказу Президиума ВС СССР № 204 от 06.08.1946. <span class="tag ok">по документу</span></p>
+<p class="small">Шифры: наградные документы — ЦАМО, ф. 33, оп. 744807; донесение о потерях — ф. 58, оп. 18001, д. 1593; карточка медицинского учреждения — филиал ЦАМО (военно-медицинские документы), фонд «Картотека общего учёта», шкаф «Герцман Эсфирь — Черяшкин Вас», ящик 050-26. В медицинской карточке фамилия записана как «Чершков».</p>
+
+<h3>Семён Васильевич Тарасенко</h3>
+<p>Родился 30.03.1915 (в части записей — 01.02.1915) в Белорусской ССР, Могилёвская область, Кричевский район, Михеевский сельсовет, деревня Кр. Русей (Червонная-Буда). Майор, в РККА с 09.10.1936 по 08.02.1947, призван Кричевским РВК. Служил в 373-м артиллерийском полку 175-й стрелковой дивизии 47-й армии 1-го Белорусского фронта, а также в 577-м гаубичном артиллерийском полку. <span class="tag ok">по документу</span></p>
+<p>Награды: орден Красной Звезды (1943), орден Отечественной войны II степени (30.06.1944), орден Отечественной войны I степени (03.09.1944), орден Отечественной войны I степени (10.02.1945), орден Ленина (31.05.1945), орден Красного Знамени (18.06.1945), медали «За отвагу», «За победу над Германией», «За освобождение Варшавы», «За взятие Берлина». <span class="tag ok">по документу</span></p>
+<p class="small">Шифры: Отечественная война II степени — ф. 33, оп. 686044, д. 4095; Отечественная война I степени (1944) — ф. 33, оп. 690306, д. 2849; Отечественная война I степени (1945) — ф. 33, оп. 686196, д. 2604; орден Ленина — ф. 33, оп. 686046, д. 170; Красное Знамя — ф. 33, оп. 686196, д. 6113. Учётно-послужная картотека: оригинал в ЦАМО, электронный образ недоступен.</p>
+
+<h3>Михаил Яковлевич Лигинов</h3>
+<p>Родился в 1911 году в с. Сачковичи Климовского района. Гвардии рядовой 19-й гвардейской отдельной стрелковой бригады, призван Климовским РВК Орловской области. Получил осколочное ранение, но с поля боя не ушёл; служил во взводе контрразведки СМЕРШ 8-го гвардейского стрелкового корпуса, задержал 7 предателей. 15.01.1944 представлен, приказом 8 гв. ск № 9/н от 26.01.1944 награждён медалью «За отвагу». В 1985 году — орден Отечественной войны I степени. Умер в 1989 году. <span class="tag ok">по документу</span></p>
+<p class="small">Шифры: наградной лист — ЦАМО, ф. 33, оп. 686044, д. 3455, л. 363; картотека ранений — филиал ЦАМО, ЭГ 1402, выбыл 24.04.1942; юбилейная картотека награждений — шкаф 34, ящик 15; военно-пересыльный пункт — ф. 8500, оп. 0107512с, д. 0182. В части документов фамилия записана как «Личинов».</p>
+<p class="small">Родство с Давыдом Лигиновым не доказано. Совпадают село и фамилия, но отчество «Яковлевич» означает, что Давыд не был его отцом: вероятнее, Михаил — сын Якова Лигинова, то есть племянник или двоюродный брат Давыда. Нужна метрика о рождении 1911 года или похозяйственная книга.</p>
+
+<h3>Александр Григорьевич Прудников</h3>
+<p>Родился 08.12.1904 в д. Дубровка Смоленского района. Красноармеец 339-й стрелковой дивизии, призван Нижнетагильским РВК Свердловской области. Убит 21.09.1943, похоронен в станице Гладковская Варениковского района Краснодарского края — это бои 339-й дивизии на Кубани в сентябре 1943 года. <span class="tag ok">по документу</span></p>
+<p class="small">Шифры: именной список безвозвратных потерь дивизии — ЦАМО, ф. 1656, оп. 2, д. 14, л. 13; донесение о потерях — ф. 58, оп. 18001, д. 801. Родство уточняется: отец пользователя говорит, что старшего брата деда звали не Александр. Отчество Григорьевич указывает, что Александр — вероятнее брат Василия Григорьевича, то есть дядя Владимира, а не его брат.</p>
+<p class="small">Это же снимает вопрос о районе: деревень Дубровка в Смоленской области несколько, но в военных документах прямо указан Смоленский район.</p>
+
+<h3>Владимир Васильевич Прудников</h3>
+<p>Капитан 3 ранга, Балтийский флот, служба в Латвии. Публичных документов в открытых источниках не найдено; личные дела офицеров ищутся в архиве ВМФ, а не в общих базах наград. <span class="tag fam">по сведениям семьи</span></p>
+
+<h2 id="documents">Документы</h2>
+<p>Ниже — сканы и полные альбомы Памяти народа, полученные 06.11.2026. Это изображения архивных дел ЦАМО, а не пересказ. Оригиналы бумажные, в архиве; здесь — их цифровые копии.</p>
+<p><b>Полные альбомы:</b> <a href="documents/chertkov-awards-full.pdf">Чертков, 13 страниц</a> · <a href="documents/tarasenko-awards-full.pdf">Тарасенко, 43 страницы</a> · <a href="documents/liginov-mikhail-album-1985.pdf">Лигинов (Личинов), 6 страниц</a> · <a href="documents/chertkov-awards-full.txt">текст Черткова</a> · <a href="documents/tarasenko-awards-full.txt">текст Тарасенко</a></p>
+<div class="photos">
+  <figure style="width:48%">
+    <img src="photos/chertkov-award-list-p467.jpg" alt="Наградной лист Черткова, страница 1">
+    <figcaption>Чертков Н. С. Наградной лист, л. 467. ЦАМО, ф. 33, оп. 744807, д. 658. Медаль «За отвагу», 1946.</figcaption>
+  </figure>
+  <figure style="width:48%">
+    <img src="photos/chertkov-award-list-p468.jpg" alt="Наградной лист Черткова, страница 2">
+    <figcaption>Чертков Н. С. Наградной лист, л. 468. Продолжение описания подвига и подписи.</figcaption>
+  </figure>
+  <figure style="width:48%">
+    <img src="photos/chertkov-award-row-p254.jpg" alt="Строка наградного списка Черткова">
+    <figcaption>Чертков Н. С. Строка наградного списка, л. 254. ЦАМО, ф. 33, оп. 744807, д. 16.</figcaption>
+  </figure>
+  <figure style="width:48%">
+    <img src="photos/chertkov-medal-za-otvagu.jpg" alt="Скриншот награды Черткова">
+    <figcaption>Скриншот страницы награждения: медаль «За отвагу», 330-я дивизия. Семейный архив.</figcaption>
+  </figure>
+  <figure style="width:48%">
+    <img src="photos/tarasenko-award-list-p1.jpg" alt="Наградной лист Тарасенко, страница 1">
+    <figcaption>Тарасенко С. В. Наградной лист, л. 1. ЦАМО, ф. 33, оп. 686196, д. 6113.</figcaption>
+  </figure>
+  <figure style="width:48%">
+    <img src="photos/tarasenko-award-list-p2.jpg" alt="Наградной лист Тарасенко, страница 2">
+    <figcaption>Тарасенко С. В. Наградной лист, л. 2. Резолюции и подписи командования.</figcaption>
+  </figure>
+  <figure style="width:48%">
+    <img src="photos/tarasenko-order-p1.jpg" alt="Первая страница приказа 677/н">
+    <figcaption>Приказ 677/н от 18.06.1945, первая страница. В списке награждённых читается фамилия Тарасенко.</figcaption>
+  </figure>
+  <figure style="width:48%">
+    <img src="photos/tarasenko-award-row.jpg" alt="Строка наградного списка Тарасенко">
+    <figcaption>Тарасенко С. В. Строка наградного списка.</figcaption>
+  </figure>
+  <figure style="width:48%">
+    <img src="photos/ligin/liginov-mikhail-award-list-p363.jpg" alt="Наградной лист Лигинова, лист 363">
+    <figcaption>Лигинов М. Я. Наградной лист, л. 363. ЦАМО, ф. 33, оп. 686044, д. 3455. Медаль «За отвагу», январь 1944.</figcaption>
+  </figure>
+  <figure style="width:48%">
+    <img src="photos/ligin/liginov-mikhail-order-list-page2.jpg" alt="Страница приказа 8 гв. ск со списком награждённых">
+    <figcaption>Приказ 8 гв. ск № 9/н от 26.01.1944, л. «-2-». В списке — гвардии рядовой Лигинов Михаил Яковлевич.</figcaption>
+  </figure>
+  <figure style="width:48%">
+    <img src="photos/prudnikov/prudnikov-aleksandr-imenny-spisok-339sd-1943.jpg" alt="Именной список потерь 339-й стрелковой дивизии">
+    <figcaption>Прудников А. Г. Именной список безвозвратных потерь 339-й сд, 1943. ЦАМО, ф. 1656, оп. 2, д. 14, л. 13.</figcaption>
+  </figure>
+</div>
+<p class="small">Сканы читаются частично: рукопись требует увеличения и ручного разбора. OCR дал только фрагменты, поэтому выводы о виде награды и точной дате рождения пока не окончательные.</p>
+
+<h2 id="conflicts">Нестыковки</h2>
+<ul>
+  <li><b>Место рождения Черткова.</b> Альбом Памяти народа: Московская область, г. Раменское. Чтение карточки в браузере: Могилёвская область, Климовичский район, д. Домамеричи. Две версии одного кластера, нужен ручной разбор наградного листа.</li>
+  <li><b>Дата призыва Черткова.</b> В альбоме на разных страницах 27.06.1941 и 07.07.1941. Возможно, одна дата — призыв, другая — прибытие в часть.</li>
+  <li><b>Вид награды Тарасенко.</b> Снято: альбом прямо перечисляет орден Красного Знамени и другие награды. Прежнее чтение штампов было ошибочным.</li>
+  <li><b>Красная Буда.</b> Для семьи Тарасенко установлен Кричевский район, Михеевский с/с, д. Кр. Русей (Червонная-Буда). Добрушский и Чаусский варианты к этой семье не относятся. Семейный рассказ о «границе с Украиной» остаётся неточным воспоминанием.</li>
+  <li><b>Отец Натальи.</b> Наталья названа сестрой Светланы, но отцовство Михаила Григорьевича отдельно не подтверждено.</li>
+  <li><b>«Искусственная гортань» и «оторвало пятку».</b> Это семейные формулировки, а не диагнозы; сохраняем как сказано, не заменяя медицинскими терминами.</li>
+  <li><b>Сачковичи и Красная Буда.</b> Это две разные родовые географии, их нельзя сливать в одну «откуда приехали».</li>
+</ul>
+
+<h2 id="notfound">Где искали и не нашли</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Покрытие поиска"><table>
+  <thead><tr><th scope="col">Где</th><th scope="col">Что искали</th><th scope="col">Почему это ещё не ответ</th></tr></thead>
+  <tbody>
+    <tr><td>Память народа</td><td>Запись 27834355; Чертков Никифор Семёнович</td><td>CAPTCHA пройдена 06.11.2026; карточки и сканы получены. Не прочитан рукописный текст листов</td></tr>
+    <tr><td>Веб-поиск</td><td>Тарасенко, Чертков, Прудников</td><td>Агрегаторы не проиндексировали карточки; фамилии массовые, совпадений много, релевантных нет</td></tr>
+    <tr><td>1418museum, Бессмертный полк</td><td>Чертков Никифор</td><td>Карточки нет; отсутствие в агрегаторе не доказывает отсутствия записи</td></tr>
+    <tr><td>nashipredki.com</td><td>Приход и метрики Сачковичей</td><td>reCAPTCHA; в выдаче есть выдержка про Новозыбковский уезд, но полная страница закрыта</td></tr>
+    <tr><td>radzima.net</td><td>Метрики Красно-Будского прихода</td><td>Список фондов доступен только по платной подписке</td></tr>
+    <tr><td>shappoff.github.io</td><td>Приход Красной Буды</td><td>Страница не найдена; каталог неполный по Могилёвской губернии</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="next">Что можно сделать дальше</h2>
+<h3>В семье</h3>
+<ul>
+  <li>Показать старшим сканы наградных листов: возможно, они узнают почерк, подписи и детали, которых нет в рассказе.</li>
+  <li>Уточнить район деревни Дубровка; имя старшего брата Владимира Васильевича; имя отца Натальи.</li>
+  <li>Спросить, сохранились ли свидетельства о рождении, браке, военные билеты, наградные книжки, домовые книги, письма.</li>
+</ul>
+<h3>Оставшиеся проверки</h3>
+<ul>
+  <li>Прочитать рукописные наградные листы Черткова и Тарасенко: вид награды, точная дата рождения, состав семьи.</li>
+  <li>Разобрать место рождения Черткова: Раменское против Домамеричей. Ответ может дать сам наградной лист или военкоматская карточка.</li>
+  <li>Проверить метрику Тарасенко 1915 года в Кричевском районе, Михеевский с/с, д. Кр. Русей (Червонная-Буда); уточнить официальное написание названия.</li>
+  <li>Найти в справочнике Черниговской губернии Сачковичи и подтвердить Новозыбковский уезд.</li>
+  <li>Проверить Воронко и Лигиновых по базам раскулаченных и репрессированных.</li>
+</ul>
+<h3>Запросить в архивах</h3>
+<ul>
+  <li><b>Отдел ЗАГС Калининграда:</b> рождение Артёма (1990), Светланы (1962); брак Сергея и Светланы.</li>
+  <li><b>Отдел ЗАГС Мурманска:</b> рождение Сергея (21.07.1960).</li>
+  <li><b>ГАБО / архив ЗАГС Брянской обл.:</b> актовая запись о рождении Михаила Григорьевича Воронко, 17.11.1929, с. Сачковичи; документы о раскулачивании семьи Воронко.</li>
+  <li><b>НИАБ (Минск) и ГАМО (Могилёв):</b> метрики Домамеричей и Красной Буды за 1905–1918 годы; рождения Никифора (1909), Татьяны, Семёна (1915).</li>
+  <li><b>ЦВМА (архив ВМФ):</b> личное дело капитана 3 ранга Владимира Васильевича Прудникова, 1931 г.р.</li>
+</ul>
+<p class="small">Готовые тексты запросов: <a href="archive-requests.md">archive-requests.md</a>. Маршруты по источникам и архивам: <a href="source-atlas.md">source-atlas.md</a>.</p>
+
+<h2 id="sources">Источники</h2>
+<ol class="src">
+  <li id="source-1"><b>Семейные сведения, собранные Артёмом Прудниковым у родителей.</b> Записано 06.11.2026; включает рассказы, расшифровку голосового и дополнение от матери о Валентине Никифоровне. Файлы: <code>input/family-testimony-2026-11-06.txt</code>, <code>input/family-testimony-2026-11-06-addendum.md</code>.</li>
+  <li id="source-2"><b>Память народа. Чертков Никифор Семёнович, 1909.</b> Наградной документ, медаль «За отвагу», приказ № 204 от 06.08.1946. <a href="https://pamyat-naroda.ru/heroes/podvig-chelovek_nagrazhdenie80115881/">pamyat-naroda.ru</a></li>
+  <li id="source-3"><b>ЦАМО. Наградной лист Черткова Н. С.</b> Ф. 33, оп. 744807, д. 658, л. 467–468; строка наградного списка — д. 16, л. 254. Сканы: <code>photos/chertkov-award-list-p467.jpg</code>, <code>photos/chertkov-award-list-p468.jpg</code>, <code>photos/chertkov-award-row-p254.jpg</code>.</li>
+  <li id="source-4"><b>Википедия. Красная Буда (Кричевский район).</b> Административная история села. <a href="https://ru.wikipedia.org/wiki/Красная_Буда_(Кричевский_район)">ru.wikipedia.org</a></li>
+  <li id="source-5"><b>Википедия. Сачковичи (Брянская область).</b> Современная принадлежность села. <a href="https://ru.wikipedia.org/wiki/Сачковичи_(Брянская_область)">ru.wikipedia.org</a></li>
+  <li id="source-6"><b>Radzima.net. Красно-Будский православный приход Покрова Пресвятой Богородицы.</b> Сведения о приходе; фонды метрик закрыты подпиской. <a href="https://www.radzima.net/ru/prihod/krasno-budskiy-gomelyskiy.html">radzima.net</a></li>
+  <li id="source-7"><b>Память народа. Тарасенко Семён Васильевич, 1915.</b> Запись 27834355, приказ 677/н от 18.06.1945. <a href="https://pamyat-naroda.ru/heroes/podvig-chelovek_nagrazhdenie27834355/">pamyat-naroda.ru</a></li>
+  <li id="source-8"><b>ЦАМО. Наградное дело Тарасенко С. В.</b> Ф. 33, оп. 686196, д. 6113: приказ 677/н, строка списка, наградной лист в двух страницах. Сканы: <code>photos/tarasenko-order-p1.jpg</code>, <code>photos/tarasenko-award-row.jpg</code>, <code>photos/tarasenko-award-list-p1.jpg</code>, <code>photos/tarasenko-award-list-p2.jpg</code>.</li>
+  <li id="source-9"><b>Википедия. Красная Буда (Гомельская область).</b> Второй одноимённый пункт, Добрушский район. <a href="https://ru.wikipedia.org/wiki/Красная_Буда_(Гомельская_область)">ru.wikipedia.org</a></li>
+  <li id="source-10"><b>Википедия. Красная Буда — неоднозначность.</b> Три одноимённых пункта в Беларуси: Добрушский, Кричевский и Чаусский районы. <a href="https://ru.wikipedia.org/wiki/Красная_Буда">ru.wikipedia.org</a></li>
+  <li id="source-11"><b>Ellis Island. Dawid Liginow, 13.09.1913, пароход Russia.</b> Плёнка T715-2176-101, строка 14; место жительства Sackowec. <a href="https://www.statueofliberty.org/arrival-details/?id=JNYF-KPT">statueofliberty.org</a></li>
+  <li id="source-12"><b>Ellis Island. Silwester Liginow, 13.09.1913, пароход Russia.</b> Плёнка T715-2176-101, строка 12; место жительства Sachkowio. <a href="https://www.statueofliberty.org/arrival-details/?id=JNYF-KP5">statueofliberty.org</a></li>
+  <li id="source-13"><b>Память народа. Альбом Черткова Н. С., 13 страниц.</b> Награда, наградные документы, донесение о потерях, медицинская карточка. <code>documents/chertkov-awards-full.pdf</code></li>
+  <li id="source-14"><b>Память народа. Альбом Тарасенко С. В., 43 страницы.</b> Полный список наград, приказы, наградные листы, учётно-послужная картотека. <code>documents/tarasenko-awards-full.pdf</code></li>
+  <li id="source-15"><b>Официальный сайт храма Покрова Пресвятой Богородицы, с. Сачковичи.</b> История прихода, закрытие 1937, открытие 1942, воспоминания А. Ф. Воронко, колокола братьев Воронко. <a href="https://klimovo-4.cerkov.ru/">klimovo-4.cerkov.ru</a></li>
+</ol>
+<p class="small">Выводы могут измениться после получения свидетельств о рождении и наградных документов. Отсутствие записи в открытой базе не доказывает отсутствия человека или события. Данные о живых людях ограничены именем и степенью родства.</p>
+
+</main>
+<footer class="report-footer"><span>Дело «Древо» · первая сводка</span><a href="#top">К началу ↑</a></footer>
+</div>
+</body>
+</html>
