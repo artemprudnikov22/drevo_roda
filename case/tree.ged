@@ -86,6 +86,7 @@
 2 DATE 13 MAR 1931
 2 PLAC д. Дубровка, Смоленская область
 1 OCCU капитан 3 ранга, Балтийский флот
+1 FAMC @F23@
 1 FAMS @F1@
 1 SOUR @S1@
 1 NOTE Статус: established. живой статус не подтверждён; данные минимизированы
@@ -558,6 +559,87 @@
 1 SOUR @S1@
 1 NOTE Статус: single-source. убит 21.09.1943, похоронен Краснодарский край, Варениковский р-н, ст. Гладковская
 
+0 @I48@ INDI
+1 NAME Григорий /Прудников/
+2 SURN Прудников
+2 GIVN Григорий
+1 SEX M
+1 FAMS @F22@
+1 SOUR @S1@
+1 NOTE Статус: hypothesis. уточнить отчество, годы жизни и жену
+
+0 @I49@ INDI
+1 NAME Василий Григорьевич /Прудников/
+2 SURN Прудников
+2 GIVN Василий Григорьевич
+1 SEX M
+1 FAMC @F22@
+1 FAMS @F23@
+1 SOUR @S1@
+1 NOTE Статус: hypothesis. найти запись о рождении Владимира 1931 и состав семьи в похозяйственной книге
+
+0 @I50@ INDI
+1 NAME Григорий Семёнович /Чертков/
+2 SURN Чертков
+2 GIVN Григорий Семёнович
+1 SEX M
+1 FAMC @F19@
+1 SOUR @S1@
+1 NOTE Статус: single-source. уточнить годы жизни и потомков на Барсуках
+
+0 @I51@ INDI
+1 NAME Ксения Семёновна /Черткова/
+2 SURN Черткова
+2 GIVN Ксения Семёновна
+1 SEX F
+1 FAMC @F19@
+1 SOUR @S1@
+1 NOTE Статус: single-source. уточнить судьбу
+
+0 @I52@ INDI
+1 NAME Иван Семёнович /Чертков/
+2 SURN Чертков
+2 GIVN Иван Семёнович
+1 SEX M
+1 FAMC @F19@
+1 SOUR @S1@
+1 NOTE Статус: single-source. уточнить годы жизни
+
+0 @I53@ INDI
+1 NAME Юрий Семёнович /Чертков/
+2 SURN Чертков
+2 GIVN Юрий Семёнович
+1 SEX M
+1 FAMC @F19@
+1 SOUR @S1@
+1 NOTE Статус: single-source. уточнить место
+
+0 @I54@ INDI
+1 NAME Иосиф Семёнович /Чертков/
+2 SURN Чертков
+2 GIVN Иосиф Семёнович
+1 SEX M
+1 FAMC @F19@
+1 SOUR @S1@
+1 NOTE Статус: single-source. уточнить место и годы
+
+0 @I55@ INDI
+1 NAME Варвара Семёновна /Черткова/
+2 SURN Черткова
+2 GIVN Варвара Семёновна
+1 SEX F
+1 FAMC @F19@
+1 SOUR @S1@
+1 NOTE Статус: single-source. уточнить судьбу
+
+0 @I56@ INDI
+1 NAME первый ребёнок Маланьи /Тарасенко/
+2 SURN Тарасенко
+2 GIVN первый ребёнок Маланьи
+1 SEX M
+1 SOUR @S1@
+1 NOTE Статус: unresolved. уточнить имена и судьбу
+
 0 @F1@ FAM
 1 HUSB @I4@
 1 WIFE @I5@
@@ -666,6 +748,12 @@
 0 @F19@ FAM
 1 HUSB @I25@
 1 CHIL @I23@
+1 CHIL @I50@
+1 CHIL @I51@
+1 CHIL @I52@
+1 CHIL @I53@
+1 CHIL @I54@
+1 CHIL @I55@
 1 SOUR @S1@
 
 0 @F20@ FAM
@@ -679,6 +767,16 @@
 1 CHIL @I38@
 1 CHIL @I39@
 1 CHIL @I40@
+1 SOUR @S1@
+
+0 @F22@ FAM
+1 HUSB @I48@
+1 CHIL @I49@
+1 SOUR @S1@
+
+0 @F23@ FAM
+1 HUSB @I49@
+1 CHIL @I4@
 1 SOUR @S1@
 
 0 TRLR
