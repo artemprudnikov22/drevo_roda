@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Древо рода — интерактивная схема</title>
+<style>
+  :root{
+    --paper:#f7f4ec; --ink:#1d1d1b; --muted:#6b665c; --line:#b9b2a3;
+    --ok:#2f6b4f; --maybe:#b07d16; --open:#8a8378; --accent:#642D90; --accent2:#ECB144;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{font-family:"Georgia","Times New Roman",serif;background:var(--paper);color:var(--ink);overflow:hidden}
+  header{position:fixed;inset:0 0 auto 0;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;
+    padding:10px 16px;background:rgba(247,244,236,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);z-index:5}
+  header h1{font-size:.95rem;margin:0;letter-spacing:.04em;font-weight:600}
+  header a{color:var(--accent);text-decoration:none;font-size:.85rem;border-bottom:1px solid currentColor}
+  .tools{display:flex;gap:6px;margin-left:auto;align-items:center}
+  .tools button{font:inherit;font-size:.8rem;padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:6px;cursor:pointer}
+  .tools button:hover{border-color:var(--ink)}
+  .tools input{font:inherit;font-size:.8rem;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:#fff;width:180px}
+  .legend{display:flex;gap:12px;font-size:.72rem;color:var(--muted);align-items:center;flex-wrap:wrap}
+  .legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+  svg{display:block;width:100vw;height:100vh;cursor:grab;touch-action:none}
+  svg.dragging{cursor:grabbing}
+  .card rect{fill:#fff;stroke:var(--line);stroke-width:1.2;rx:8}
+  .card.est rect{stroke:var(--ok)}
+  .card.hyp rect{stroke:var(--maybe);stroke-dasharray:4 3}
+  .card.unres rect{stroke:var(--open);stroke-dasharray:2 4}
+  .card:hover rect{stroke:var(--accent);stroke-width:2}
+  .card.sel rect{stroke:var(--accent);stroke-width:2.4;fill:#fbf8ff}
+  .card text{font-family:"Georgia",serif;fill:var(--ink);pointer-events:none}
+  .card .n{font-size:12px;font-weight:600}
+  .card .y{font-size:10.5px;fill:var(--muted)}
+  .card .p{font-size:9.5px;fill:var(--muted)}
+  .edge{fill:none;stroke:var(--line);stroke-width:1.1}
+  .edge.kin{stroke-dasharray:3 4;stroke:var(--maybe)}
+  .spouse{stroke:var(--accent);stroke-width:1.2;stroke-dasharray:1 3;opacity:.55}
+  aside{position:fixed;top:0;right:0;width:320px;max-width:88vw;height:100%;background:#fff;border-left:1px solid var(--line);
+    padding:56px 18px 24px;overflow:auto;transform:translateX(105%);transition:transform .22s ease;z-index:6}
+  aside.open{transform:none;box-shadow:-12px 0 32px rgba(0,0,0,.08)}
+  aside h2{font-size:1.05rem;margin:.2em 0 .1em}
+  aside .muted{color:var(--muted);font-size:.85rem}
+  aside dl{font-size:.85rem;margin:14px 0}
+  aside dt{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+  aside dd{margin:2px 0 0}
+  aside .close{position:absolute;top:12px;right:12px;background:none;border:1px solid var(--line);border-radius:6px;
+    width:32px;height:32px;font-size:1rem;cursor:pointer}
+  .hint{position:fixed;left:16px;bottom:12px;font-size:.72rem;color:var(--muted);z-index:4}
+  @media (max-width:720px){aside{width:100%;max-width:100%}.tools input{width:120px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Древо рода</h1>
+  <a href="index.html">← к отчёту</a>
+  <div class="legend">
+    <span><i style="background:#2f6b4f"></i>по документу</span>
+    <span><i style="background:#b07d16"></i>версия</span>
+    <span><i style="background:#8a8378"></i>не установлено</span>
+  </div>
+  <div class="tools">
+    <input id="q" type="search" placeholder="Найти имя" aria-label="Поиск по имени">
+    <button id="zoomout" aria-label="Уменьшить">−</button>
+    <button id="zoomin" aria-label="Увеличить">+</button>
+    <button id="reset">Сброс</button>
+  </div>
+</header>
+
+<svg id="canvas" role="img" aria-label="Интерактивное семейное древо">
+  <g id="scene"></g>
+</svg>
+
+<aside id="panel" aria-live="polite">
+  <button class="close" id="close" aria-label="Закрыть">×</button>
+  <div id="panel-body"></div>
+</aside>
+
+<p class="hint">Колесо — масштаб · перетаскивание — сдвиг · клик по карточке — подробности</p>
+
+<script>
+const W = 186, H = 70, GX = 26, GY = 132;
+const NS = "http://www.w3.org/2000/svg";
+let DATA = null, persons = new Map(), level = new Map(), pos = new Map();
+let scale = 1, tx = 0, ty = 0;
+
+const STATUS_CLASS = {established:"est","single-source":"est",corroborated:"est",
+  hypothesis:"hyp",contested:"hyp","unresolved":"unres"};
+const STATUS_TEXT = {established:"по документу", corroborated:"подтверждено",
+  "single-source":"один источник", hypothesis:"версия", unresolved:'не установлено'};
+
+const el = (n, a={}) => { const e = document.createElementNS(NS, n);
+  for (const k in a) e.setAttribute(k, a[k]); return e; };
+
+function shortPlace(s){ if(!s) return ""; const first = s.split(";")[0].trim(); return first.length>42 ? first.slice(0,40)+"…" : first; }
+function years(p){
+  const b = p.birth ? p.birth.slice(0,4) : "?";
+  const d = p.death ? p.death.slice(0,4) : "";
+  return d ? `${b} — ${d}` : `${b} — ?`;
+}
+function wrap(text, max){
+  const words = (text||"").split(" "); const lines=[]; let cur="";
+  for(const w of words){ if((cur+" "+w).trim().length>max){ if(cur) lines.push(cur); cur=w; } else cur=(cur+" "+w).trim(); }
+  if(cur) lines.push(cur);
+  return lines.slice(0,2);
+}
+
+function computeLevels(){
+  const memo = new Map();
+  const visit = (id, stack=new Set()) => {
+    if (memo.has(id)) return memo.get(id);
+    if (stack.has(id)) return 0;
+    stack.add(id);
+    const ps = (DATA.parents[id]||[]);
+    const v = ps.length ? Math.max(...ps.map(x => visit(x, stack))) + 1 : 0;
+    stack.delete(id);
+    memo.set(id, v); return v;
+  };
+  DATA.persons.forEach(p => level.set(p.id, visit(p.id)));
+}
+
+function layout(){
+  const byLevel = new Map();
+  for (const p of DATA.persons){
+    const l = level.get(p.id);
+    if(!byLevel.has(l)) byLevel.set(l, []);
+    byLevel.get(l).push(p.id);
+  }
+  const levels = [...byLevel.keys()].sort((a,b)=>a-b);
+  const index = new Map();
+  for (const l of levels){
+    const ids = byLevel.get(l);
+    ids.sort((a,b)=>{
+      const pa = (DATA.parents[a]||[]).map(x=>index.get(x) ?? 9999);
+      const pb = (DATA.parents[b]||[]).map(x=>index.get(x) ?? 9999);
+      const ma = pa.length ? Math.min(...pa) : 9999;
+      const mb = pb.length ? Math.min(...pb) : 9999;
+      if (ma !== mb) return ma - mb;
+      return (persons.get(a).name||"").localeCompare(persons.get(b).name||"","ru");
+    });
+    ids.forEach((id,i)=>index.set(id,i));
+    ids.forEach((id,i)=>pos.set(id, { x: i*(W+GX), y: l*GY }));
+  }
+  // мягкая подгонка: родители центрируются над детьми
+  const children = {};
+  for (const [c, ps] of Object.entries(DATA.parents)) ps.forEach(p => (children[p] ||= []).push(c));
+  for (let pass=0; pass<3; pass++){
+    for (const l of [...levels].reverse()){
+      const ids = byLevel.get(l);
+      ids.forEach(id => {
+        const kids = children[id] || [];
+        if (!kids.length) return;
+        const cx = kids.reduce((s,k)=>s+pos.get(k).x,0)/kids.length;
+        pos.get(id).x = pos.get(id).x*0.35 + cx*0.65;
+      });
+      // раздвигаем, чтобы карточки не наезжали
+      ids.sort((a,b)=>pos.get(a).x-pos.get(b).x);
+      for (let i=1;i<ids.length;i++){
+        const prev = pos.get(ids[i-1]).x, cur = pos.get(ids[i]).x;
+        if (cur - prev < W + GX) pos.get(ids[i]).x = prev + W + GX;
+      }
+    }
+  }
+}
+
+function draw(){
+  const scene = document.getElementById("scene");
+  scene.innerHTML = "";
+  const edges = el("g"), cards = el("g");
+  scene.append(edges, cards);
+
+  for (const [c, ps] of Object.entries(DATA.parents)){
+    for (const p of ps){
+      const a = pos.get(p), b = pos.get(c);
+      if (!a || !b) continue;
+      const x1 = a.x + W/2, y1 = a.y + H, x2 = b.x + W/2, y2 = b.y;
+      const my = (y1 + y2)/2;
+      edges.append(el("path", {class:"edge", d:`M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`}));
+    }
+  }
+  for (const [a,b] of DATA.spouses){
+    const pa = pos.get(a), pb = pos.get(b);
+    if (!pa || !pb || level.get(a) !== level.get(b)) continue;
+    const x1 = Math.min(pa.x, pb.x) + W, x2 = Math.max(pa.x, pb.x);
+    edges.append(el("line", {class:"spouse", x1, y1:pa.y + H/2, x2, y2:pa.y + H/2}));
+  }
+  for (const e of DATA.extra){
+    const pa = pos.get(e.a), pb = pos.get(e.b);
+    if (!pa || !pb) continue;
+    const x1 = pa.x + W/2, y1 = pa.y + H/2, x2 = pb.x + W/2, y2 = pb.y + H/2;
+    edges.append(el("path", {class:"edge kin", d:`M${x1},${y1} C${x1},${(y1+y2)/2} ${x2},${(y1+y2)/2} ${x2},${y2}`}));
+  }
+
+  for (const p of DATA.persons){
+    const pt = pos.get(p.id); if(!pt) continue;
+    const cls = "card " + (STATUS_CLASS[p.status] || "");
+    const g = el("g", {class:cls, transform:`translate(${pt.x},${pt.y})`, tabindex:"0", role:"button"});
+    g.append(el("rect", {width:W, height:H, rx:8}));
+    const lines = wrap(p.name, 26);
+    const t1 = el("text", {class:"n", x:10, y:18});
+    lines.forEach((ln,i)=>{ const ts = el("tspan", {x:10, dy:i?13:0}); ts.textContent = ln; t1.append(ts); });
+    g.append(t1);
+    const t2 = el("text", {class:"y", x:10, y:lines.length>1?48:38}); t2.textContent = years(p); g.append(t2);
+    const t3 = el("text", {class:"p", x:10, y:H-8}); t3.textContent = shortPlace(p.place); g.append(t3);
+    g.addEventListener("click", ev => { ev.stopPropagation(); select(p.id, g); });
+    g.addEventListener("keydown", ev => { if(ev.key==="Enter"){ select(p.id, g);} });
+    cards.append(g);
+  }
+  applyTransform();
+}
+
+function applyTransform(){
+  document.getElementById("scene").setAttribute("transform", `translate(${tx},${ty}) scale(${scale})`);
+}
+
+function select(id, node){
+  document.querySelectorAll(".card.sel").forEach(n=>n.classList.remove("sel"));
+  node?.classList.add("sel");
+  const p = persons.get(id);
+  const kids = (DATA.parents[id]||[]).map(x=>persons.get(x)?.name).filter(Boolean);
+  const children = Object.entries(DATA.parents).filter(([,ps])=>ps.includes(id)).map(([c])=>persons.get(c)?.name).filter(Boolean);
+  const body = document.getElementById("panel-body");
+  body.innerHTML = `
+    <h2>${p.name}</h2>
+    <div class="muted">${STATUS_TEXT[p.status] || p.status || ""}</div>
+    <dl>
+      <dt>Годы</dt><dd>${years(p)}</dd>
+      <dt>Места</dt><dd>${p.place || "—"}</dd>
+      ${kids.length?`<dt>Родители</dt><dd>${kids.join(", ")}</dd>`:""}
+      ${children.length?`<dt>Дети</dt><dd>${children.join(", ")}</dd>`:""}
+      ${p.artifacts?.length?`<dt>Документы</dt><dd>${p.artifacts.join(", ")}</dd>`:""}
+      ${p.notes?`<dt>Примечание</dt><dd>${p.notes}</dd>`:""}
+    </dl>`;
+  document.getElementById("panel").classList.add("open");
+}
+
+function fit(){
+  const xs=[...pos.values()].map(p=>p.x), ys=[...pos.values()].map(p=>p.y);
+  const minX=Math.min(...xs), maxX=Math.max(...xs)+W, minY=Math.min(...ys), maxY=Math.max(...ys)+H;
+  const vw=innerWidth, vh=innerHeight-56;
+  scale = Math.min(vw/(maxX-minX+120), vh/(maxY-minY+120), 1.1);
+  tx = (vw-(maxX-minX)*scale)/2 - minX*scale;
+  ty = 64 + (vh-(maxY-minY)*scale)/2 - minY*scale;
+  applyTransform();
+}
+
+const svg = document.getElementById("canvas");
+let drag=null;
+svg.addEventListener("pointerdown", e=>{ drag={x:e.clientX,y:e.clientY,tx,ty}; svg.classList.add("dragging"); svg.setPointerCapture(e.pointerId); });
+svg.addEventListener("pointermove", e=>{ if(!drag) return; tx=drag.tx+(e.clientX-drag.x); ty=drag.ty+(e.clientY-drag.y); applyTransform(); });
+svg.addEventListener("pointerup", ()=>{ drag=null; svg.classList.remove("dragging"); });
+svg.addEventListener("wheel", e=>{ e.preventDefault();
+  const k = e.deltaY < 0 ? 1.12 : 1/1.12;
+  const r = svg.getBoundingClientRect();
+  const mx = e.clientX - r.left, my = e.clientY - r.top;
+  const ns = Math.max(.25, Math.min(3, scale*k));
+  tx = mx - (mx - tx) * (ns/scale); ty = my - (my - ty) * (ns/scale); scale = ns; applyTransform();
+}, {passive:false});
+
+document.getElementById("zoomin").onclick = ()=>{ scale=Math.min(3,scale*1.2); applyTransform(); };
+document.getElementById("zoomout").onclick = ()=>{ scale=Math.max(.25,scale/1.2); applyTransform(); };
+document.getElementById("reset").onclick = ()=>{ fit(); };
+document.getElementById("close").onclick = ()=>document.getElementById("panel").classList.remove("open");
+document.getElementById("q").addEventListener("input", e=>{
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll(".card").forEach(n=>n.style.opacity = "");
+  if(!q) return;
+  document.querySelectorAll(".card").forEach(n=>{
+    const name = n.querySelector(".n")?.textContent.toLowerCase() || "";
+    if(!name.includes(q)) n.style.opacity = .18;
+  });
+});
+
+fetch("tree-data.json").then(r=>r.json()).then(d=>{
+  DATA = d;
+  d.persons.forEach(p=>persons.set(p.id,p));
+  computeLevels(); layout(); draw(); fit();
+}).catch(err=>{
+  document.getElementById("panel-body").innerHTML = "<h2>Не удалось загрузить данные</h2><p class='muted'>Откройте страницу через локальный сервер или с сайта GitHub Pages.</p>";
+  document.getElementById("panel").classList.add("open");
+});
+</script>
+</body>
+</html>
